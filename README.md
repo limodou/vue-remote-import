@@ -37,12 +37,10 @@ You should output index.html not only js. So that you can use webpack to split c
 You should process `__webpack_public_path__` so that the webpack public path can be applied on the fly. In order to do that, you can create a file maybe named public_path.js.
 And the content of it should be:
 
-    ```
     if (window.__REMOTE_WEBPACK_PUBLIC_PATH__) {
       // eslint-disable-next-line
       __webpack_public_path__ = window.__REMOTE_WEBPACK_PUBLIC_PATH__
     }
-    ```
 
 The `__REMOTE_WEBPACK_PUBLIC_PATH__` will be injected by vue-remote-import package when invoke `remoteImport` function. And you need to import it in your component entry file(e.g. main.js). Just like `import './public-path'`
 
