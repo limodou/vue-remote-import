@@ -1,6 +1,6 @@
 {
   "name": "vue-remote-import",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Import remote VUE component via url",
   "main": "src/index.js",
   "scripts": {
