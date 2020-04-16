@@ -14,10 +14,13 @@ const getDomain = (url) => {
     domain = u.protocol + '//' + u.host
     path = u.path
   }
-  // let index = path.lastIndexOf('/')
-  // if (index > -1 && path.startsWith('/')) {
-  //   path = path.substr(0, index)
-  // }
+  console.log(url)
+  if (!path.endsWith('/')) {
+    let index = path.lastIndexOf('/')
+    if (index > -1 && path.startsWith('/')) {
+      path = path.substr(0, index + 1)
+    }
+  }
   return domain + path
 }
 
