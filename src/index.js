@@ -14,7 +14,6 @@ const getDomain = (url) => {
     domain = u.protocol + '//' + u.host
     path = u.path
   }
-  console.log(url)
   if (!path.endsWith('/')) {
     let index = path.lastIndexOf('/')
     if (index > -1 && path.startsWith('/')) {
@@ -24,7 +23,24 @@ const getDomain = (url) => {
   return domain + path
 }
 
-export const importResource = (location, callback) => {
+const fetch = async (url) => {
+  let result
+  if (url.endsWith('.js')) {
+    let pos = url.lastIndexOf('/')
+    let filename = url.substr(pos + 1)
+    result = await window.fetch(url)
+    let text = await result.text()
+    text = text.replace(`sourceMappingURL=${filename}.map`, `sourceMappingURL=${url}.map`)
+    result.text = () => {
+      return text
+    }
+  } else {
+    result = window.fetch(url)
+  }
+  return result
+}
+
+export const importResource = (location, options = {}) => {
   return new Promise((resolve, reject) => {
     let module = cache[location]
     if (module) {
@@ -33,9 +49,14 @@ export const importResource = (location, callback) => {
     }
     if (loading[location] === undefined) {
       loading[location] = []
-      importEntry(location, {
+      let opts = {
         getDomain
-      }).then(result => {
+      }
+      // sourcemap 用于控制是否替换 sourcemap 路径
+      if (options.sourcemap) {
+        opts.fetch = fetch
+      }
+      importEntry(location, opts).then(result => {
         const {
           template,
           execScripts,
@@ -45,7 +66,7 @@ export const importResource = (location, callback) => {
           if (result.default) result = result.default
           cache[location] = result
 
-          if (callback) callback({
+          if (options.callback) options.callback({
             template,
             assetPublicPath,
             props: result
@@ -75,8 +96,8 @@ export const importResource = (location, callback) => {
   })
 }
 
-export const remoteImport = async (location, name, callback) => {
-  const module = await importResource(location, callback)
+export const remoteImport = async (location, name, options) => {
+  const module = await importResource(location, options)
   if (name) {
     let m = module[name]
     if (!m) {
