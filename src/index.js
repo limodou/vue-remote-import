@@ -42,15 +42,22 @@ const fetch = async (url) => {
 
 export const importResource = (location, options = {}) => {
   return new Promise((resolve, reject) => {
-    let resource = cache[location]
-    if (resource) {
-      if (options.callback) options.callback(resource)
-      resolve(resource.props)
-      return
-    }
     // 如果 location 不带schema 则使用 window.location.href 进行合成
     if (location.indexOf('://') === -1) {
       location = urlParse.resolve(window.location.href, location)
+    }
+    let resource = cache[location]
+    if (resource) {
+      if (options.callback) {
+        try {
+          options.callback(resource)
+        } catch (err) {
+          reject(err)
+          return
+        }
+      }
+      resolve(resource.props)
+      return
     }
     if (loading[location] === undefined) {
       loading[location] = []
