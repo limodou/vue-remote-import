@@ -1,8 +1,8 @@
 {
   "name": "vue-remote-import",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Import remote VUE component via url",
-  "main": "src/index.js",
+  "main": "dist/vue-remote-import.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
@@ -23,8 +23,9 @@
   },
   "homepage": "https://github.com/limodou/vue-remote-import#readme",
   "dependencies": {
+    "@cool-front/import-html-entry": "^1.9.3",
     "core-js": "^2.6.11",
-    "import-html-entry": "^1.5.1"
+    "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -35,5 +36,10 @@
     "eslint": "^6.8.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
-  }
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "IE > 10"
+  ]
 }

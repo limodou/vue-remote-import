@@ -1,6 +1,7 @@
+import 'isomorphic-fetch'
 import {
   importEntry,
-} from "import-html-entry";
+} from "@cool-front/import-html-entry";
 import urlParse from 'url'
 
 let cache = {}
