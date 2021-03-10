@@ -1,6 +1,6 @@
 {
   "name": "vue-remote-import",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Import remote VUE component via url",
   "main": "dist/vue-remote-import.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/limodou/vue-remote-import#readme",
   "dependencies": {
-    "@cool-front/import-html-entry": "^1.9.3",
+    "@cool-front/import-html-entry": "^1.9.4",
     "core-js": "^2.6.11",
     "isomorphic-fetch": "^3.0.0"
   },
